@@ -22,11 +22,17 @@ public class LinkedList {
         Scanner sc = new Scanner(System.in);
         boolean keepRunning = true;
         while(keepRunning){
+            int pos = -1;
+            int val = -1;
             System.out.println("Enter choice:");
             System.out.println("0. Print the current list.");
             System.out.println("1. Insert Node in the end.");
             System.out.println("2. Insert Node at the start.");
             System.out.println("3. Insert Node at nth position.");
+            System.out.println("4. Delete Node at the end.");
+            System.out.println("5. Delete Node at the first position.");
+            System.out.println("6. Delete Node at Nth position");
+            System.out.println("7. Delete Node by value.");
             switch (sc.nextInt()){
                 case 0:
                     printList();
@@ -43,12 +49,35 @@ public class LinkedList {
                     break;
                 case 3:
                     System.out.println("Enter the value to be inserted followed by position.");
-                    int val = sc.nextInt();
-                    int pos = sc.nextInt();
+                    val = sc.nextInt();
+                    pos = sc.nextInt();
                     if(pos == 1)
                         insertAtStart(val);
                     else
                         insertAtNth(val, pos - 1);
+                    printList();
+                    break;
+                case 4:
+                    deleteAtEnd();
+                    printList();
+                    break;
+                case 5:
+                    deleteAtStart();
+                    printList();
+                    break;
+                case 6:
+                    System.out.println("Enter the position of the node to delete.");
+                    pos = sc.nextInt();
+                    if(pos == 1)
+                        deleteAtStart();
+                    else
+                        deleteAtNth(pos - 1);
+                    printList();
+                    break;
+                case 7:
+                    System.out.println("Enter the value to be deleted.");
+                    val = sc.nextInt();
+                    deleteByValue(val);
                     printList();
                     break;
                 default:
@@ -107,5 +136,73 @@ public class LinkedList {
         Node newNode = new Node(val);
         newNode.next = temp.next;
         temp.next = newNode;
+    }
+
+    private static void deleteAtEnd(){
+        Node temp = head;
+        if(head == null)
+            return;
+        if(head.next == null)
+        {
+            head = null;
+            return;
+        }
+        while(temp.next.next != null){
+            temp = temp.next;
+        }
+        temp.next = null;
+    }
+
+    private static void deleteAtStart(){
+        if(head == null)
+            return;
+        if(head.next == null)
+        {
+            head = null;
+            return;
+        }
+        head = head.next;
+
+    }
+
+    private static void deleteAtNth(int pos){
+        if(head == null)
+            return;
+        Node temp = head;
+        Node prev = head;
+        while (pos > 1 && temp.next != null){
+            prev = temp;
+            temp = temp.next;
+            pos -= 1;
+        }
+        if(temp.next == null || pos != 1){
+            System.out.println("Position is beyond the length of the list. Do you wish to delete the node at the end of the list?\n1. Yes\n2. No");
+            switch (new Scanner(System.in).nextInt()){
+                case 1:
+                    prev.next = null;
+                    break;
+                case 2:
+                    break;
+            }
+        }
+        else {
+            temp.next = temp.next.next;
+        }
+    }
+
+    private static void deleteByValue(int val){
+        Node temp = head;
+        Node prev = temp;
+        int pos = 1;
+        while(temp != null){
+            if(temp.val == val){
+                prev.next = temp.next;
+                System.out.println("Node with value " + val + " deleted at position " + pos);
+            }
+            prev = temp;
+            temp = temp.next;
+            pos += 1;
+        }
+        System.out.println("Element not found in the list.");
     }
 }
