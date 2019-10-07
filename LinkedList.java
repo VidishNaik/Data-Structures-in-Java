@@ -33,6 +33,8 @@ public class LinkedList {
             System.out.println("5. Delete Node at the first position.");
             System.out.println("6. Delete Node at Nth position");
             System.out.println("7. Delete Node by value.");
+            System.out.println("8. Reverse the list using iteration.");
+            System.out.println("9. Reverse the list using recursion.");
             switch (sc.nextInt()){
                 case 0:
                     printList();
@@ -78,6 +80,14 @@ public class LinkedList {
                     System.out.println("Enter the value to be deleted.");
                     val = sc.nextInt();
                     deleteByValue(val);
+                    printList();
+                    break;
+                case 8:
+                    reverseByIteration();
+                    printList();
+                    break;
+                case 9:
+                    reverseByRecursion(head, null);
                     printList();
                     break;
                 default:
@@ -204,5 +214,27 @@ public class LinkedList {
             pos += 1;
         }
         System.out.println("Element not found in the list.");
+    }
+
+    private static void reverseByIteration(){
+        Node temp = head;
+        Node prev = null;
+        Node after = head.next;
+        while(after != null){
+            temp.next = prev;
+            prev = temp;
+            temp = after;
+            after = after.next;
+        }
+        temp.next = prev;
+        head = temp;
+    }
+    private static void reverseByRecursion(Node current, Node prev){
+        if(current == null){
+            head = prev;
+            return;
+        }
+        reverseByRecursion(current.next, current);
+        current.next = prev;
     }
 }
