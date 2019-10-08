@@ -1,24 +1,21 @@
 import java.util.Scanner;
 
-class Node{
-    int val;
-    Node next;
-    Node(int val){
-         this.val = val;
-         this.next = null;
-     }
-     Node(int val, Node next){
-         this.val = val;
-         this.next = next;
-     }
-}
-
 public class LinkedList {
+    private static class Node{
+        int val;
+        Node next;
+        Node(int val){
+            this.val = val;
+            this.next = null;
+        }
+        Node(int val, Node next){
+            this.val = val;
+            this.next = next;
+        }
+    }
+
     private static Node head = null;
     public static void main(String[] args) {
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(6);
         Scanner sc = new Scanner(System.in);
         boolean keepRunning = true;
         while(keepRunning){
