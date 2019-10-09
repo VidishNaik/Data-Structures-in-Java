@@ -62,12 +62,19 @@ class StackADT extends List{
     }
 
     void pop(){
+        if(head == null){
+            return;
+        }
         System.out.println("Popped element: " + head.val);
         LinkedList.Node temp = head;
         head = head.next;
         temp.next = null;
     }
     void peek(){
+        if(head == null){
+            stack.print();
+            return;
+        }
         System.out.println("Element at top of stack: " + head.val);
     }
     void isEmpty(){
